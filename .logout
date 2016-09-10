@@ -1,0 +1,14 @@
+#
+# $Id: .logout 5137 2013-09-20 00:51:27Z kiyo $
+# $HeadURL: svn://zion/trunk/proj/dotfiles/.logout $
+#
+
+switch ("`tty`")
+  case /dev/tty[0-9]:
+  case /dev/tty[0-9][0-9]:
+  case /dev/ttyv[0-9]:
+    clear
+    breaksw
+endsw
+
+# vim:sts=2:sw=2:ts=8:et:syntax=csh

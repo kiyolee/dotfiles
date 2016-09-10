@@ -1,0 +1,32 @@
+#
+# $Id: .bash_login.githelp 7718 2016-08-31 01:22:45Z kiyo $
+# $HeadURL: svn://zion/trunk/proj/dotfiles/.bash_login.githelp $
+#
+
+_is_git_repo() {
+  [ $# -eq 0 ] && return 1
+  gitdir="$1"
+  [ -f "$gitdir/config" -a -d "$gitdir/objects" -a -d "$gitdir/refs" ] && return 0
+  [ -f "$gitdir/.git/config" -a -d "$gitdir/.git/objects" -a -d "$gitdir/.git/refs" ] && return 0
+  return 1
+}
+
+_git_swipe() {
+  if [ $# -ne 0 ]; then
+    gitdir="$1"
+  else
+    gitdir=.
+  fi
+  _is_git_repo "$gitdir" || return 1
+  (
+    cd "$gitdir"
+    echo "git-repo: `pwd`"
+    set -x
+    git reflog expire --expire=now --all
+    git gc --prune=now
+    git repack -a -d -f --depth=250 --window=250
+    set +x
+  )
+}
+
+# vim:sts=2:sw=2:ts=8:et:syntax=sh
