@@ -1,5 +1,5 @@
 "
-" $Id: .vimrc 7398 2016-05-10 11:54:03Z kiyo $
+" $Id: .vimrc 7781 2016-10-06 02:33:57Z kiyo $
 " $HeadURL: svn://zion/trunk/proj/dotfiles/.vimrc $
 "
 
@@ -30,9 +30,9 @@ if !has("gui_running")
   " with out gui
   "
   if !has("dos32") && !has("dos16")
-    colorscheme default_kiyo
+    colorscheme default
   else
-    colorscheme defaul~1
+    colorscheme default
   endif
 
 else
@@ -67,7 +67,7 @@ else
 
   endif
 
-  colorscheme peachpuff_kiyo
+  colorscheme peachpuff
 
   if has("gui_win32")
     au GUIEnter * simalt ~x
