@@ -1,6 +1,5 @@
 "
-" $Id: .vimrc 7781 2016-10-06 02:33:57Z kiyo $
-" $HeadURL: svn://zion/trunk/proj/dotfiles/.vimrc $
+" .vimrc
 "
 
 if version >= 602

@@ -1,6 +1,5 @@
 #
-# $Id: .login 7374 2016-05-05 01:26:54Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.login $
+# .login
 #
 
 ### basic options

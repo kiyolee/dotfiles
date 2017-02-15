@@ -1,6 +1,5 @@
 #
-# $Id: .tcsh.bindkey 5132 2013-09-19 14:38:21Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.tcsh.bindkey $
+# .tcsh.bindkey
 #
 
 if ( $?prompt && $?term ) then

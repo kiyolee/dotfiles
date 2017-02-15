@@ -1,6 +1,5 @@
 #
-# $Id: .bash_logout 5131 2013-09-19 14:28:06Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.bash_logout $
+# .bash_logout
 #
 
 # invalidate the gpm selection buffer if logging out from a

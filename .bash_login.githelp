@@ -1,6 +1,5 @@
 #
-# $Id: .bash_login.githelp 7718 2016-08-31 01:22:45Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.bash_login.githelp $
+# .bash_login.githelp
 #
 
 _is_git_repo() {

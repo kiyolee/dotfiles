@@ -1,6 +1,5 @@
 #
-# $Id: .logout 5137 2013-09-20 00:51:27Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.logout $
+# .logout
 #
 
 switch ("`tty`")

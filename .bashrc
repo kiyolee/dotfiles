@@ -1,6 +1,5 @@
 #
-# $Id: .bashrc 5131 2013-09-19 14:28:06Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.bashrc $
+# .bashrc
 #
 
 ### source global definitions

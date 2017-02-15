@@ -1,6 +1,5 @@
 #
-# $Id: .bash_login.local 7618 2016-07-21 00:34:14Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.bash_login.local $
+# .bash_login.local
 #
 
 [ -z "$PS1" ] && return

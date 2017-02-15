@@ -1,6 +1,5 @@
 "
-" $Id: commonrc.vim 5144 2013-09-20 09:16:16Z kiyo $
-" $HeadURL: svn://zion/trunk/proj/dotfiles/.vim/commonrc.vim $
+" .vim/commonrc.vim
 "
 
 set nocompatible

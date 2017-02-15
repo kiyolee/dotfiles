@@ -1,6 +1,5 @@
 #
-# $Id: .cshrc 5132 2013-09-19 14:38:21Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.cshrc $
+# .cshrc
 #
 
 ### basic paths

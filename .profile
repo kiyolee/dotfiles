@@ -1,6 +1,5 @@
 #
-# $Id: .profile 5131 2013-09-19 14:28:06Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.profile $
+# .profile
 #
 
 if [ -f "$HOME/.profile.local" ]; then

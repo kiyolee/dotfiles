@@ -1,6 +1,5 @@
 #
-# $Id: .bash_login.pathhelp 5131 2013-09-19 14:28:06Z kiyo $
-# $HeadURL: svn://zion/trunk/proj/dotfiles/.bash_login.pathhelp $
+# .bash_login.pathhelp
 #
 
 #for _egrep in /usr/local/bin/gegrep /usr/bin/gegrep /bin/gegrep /usr/local/bin/egrep /usr/bin/egrep /bin/egrep; do
