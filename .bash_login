@@ -239,17 +239,27 @@ if [ -n "$PS1" ]; then
   else
     PC_XTERM_ID=
   fi
+  if [ `uname -o` = 'Msys' ]; then
+    if [ `uname -m` == 'x86_64' ]; then
+      PLAT_ID='[msys64]'
+    else
+      PLAT_ID='[msys]'
+    fi
+  else
+    PLAT_ID=''
+  fi
   case "$TERM" in
     xterm*)
-      PROMPT_COMMAND='echo -ne "\e]0;'"$PC_XTERM_ID${HOSTNAME%%.*}:${USER}"':${PWD/#${HOME}/~}\a"'
+      PROMPT_COMMAND='echo -ne "\e]0;'"$PC_XTERM_ID${PLAT_ID}${HOSTNAME%%.*}:${USER}"':${PWD/#${HOME}/~}\a"'
       ;;
     screen*)
-      PROMPT_COMMAND='echo -ne "\e_'"$PC_XTERM_ID${HOSTNAME%%.*}:${USER}"':${PWD/#${HOME}/~}\e\\"'
+      PROMPT_COMMAND='echo -ne "\e_'"$PC_XTERM_ID${PLAT_ID}${HOSTNAME%%.*}:${USER}"':${PWD/#${HOME}/~}\e\\"'
       ;;
     *)
       ;;
   esac
   unset PC_XTERM_ID
+  unset PLAT_ID
 
   if [ -f ~/.inputrc ]; then
     bind -f ~/.inputrc
