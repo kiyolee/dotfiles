@@ -14,12 +14,15 @@ if !has("dos16")
 
   let &g:runtimepath=$VIMRUNTIME . "," . g:my_vim
 
-  function My_vim_file(fn)
-    return g:my_vim . "/" . a:fn
+  function My_local_vim(fn)
+    return g:my_vim . "/local/" . a:fn
+  endfunction
+  function My_local_filetype_vim(fn)
+    return g:my_vim . "/local/filetype/" . a:fn
   endfunction
 
-  if filereadable(My_vim_file("commonrc.vim"))
-    exec "source " . My_vim_file("commonrc.vim")
+  if filereadable(My_local_vim("commonrc.vim"))
+    exec "source " . My_local_vim("commonrc.vim")
   endif
 
 endif
@@ -76,8 +79,8 @@ endif
 
 endif " version >= 602
 
-if filereadable(My_vim_file("localrc.vim"))
-  exec "source " . My_vim_file("localrc.vim")
+if filereadable(My_local_vim("localrc.vim"))
+  exec "source " . My_local_vim("localrc.vim")
 endif
 
 " unlet g:my_vim
