@@ -6,3 +6,4 @@ set wrap
 set noautoindent
 
 set syntax=html
+set ft=html
