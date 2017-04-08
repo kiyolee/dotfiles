@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: mktar.sh 7374 2016-05-05 01:26:54Z kiyo $
+# mktar.sh
 #
 
 cd `dirname "$0"`
