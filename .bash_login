@@ -21,7 +21,7 @@ unset is_sunos
 unset is_openbsd
 case `uname -s` in
   [Cc][Yy][Gg][Ww][Ii][Nn]*) is_cygwin=1 ;;
-  [Mm][Ii][Nn][Gg][Ww]*) is_mingw=1 ;;
+  [Mm][Ii][Nn][Gg][Ww]*|[Mm][Ss][Yy][Ss]*) is_mingw=1 ;;
   [Ll][Ii][Nn][Uu][Xx]*) is_linux=1 ;;
   [Ss][Uu][Nn][Oo][Ss]*) is_sunos=1 ;;
   [Oo][Pp][Ee][Nn][Bb][Ss][Dd]*) is_openbsd=1 ;;
@@ -210,21 +210,21 @@ if [ -n "$PS1" ]; then
   unset _p
   unset _d
   if [ -x "$_dircolors_" ]; then
-    case "$TERM" in
-      xterm*)
-        DIRCOLORS_CONF=~/.dircolors.d/dircolors.xterm
-        ;;
-      screen*)
-        DIRCOLORS_CONF=~/.dircolors.d/dircolors.screen
-        ;;
-      *)
-        if [ -n "$TERM" ]; then
-          DIRCOLORS_CONF=~/.dircolors.d/dircolors."$TERM"
-        else
+    if [ -n "$TERM" -a -f ~/.dircolors.d/dircolors."$TERM" ]; then
+      DIRCOLORS_CONF=~/.dircolors.d/dircolors."$TERM"
+    else
+      case "$TERM" in
+        xterm*)
+          DIRCOLORS_CONF=~/.dircolors.d/dircolors.xterm
+          ;;
+        screen*)
+          DIRCOLORS_CONF=~/.dircolors.d/dircolors.screen
+          ;;
+        *)
           DIRCOLORS_CONF=
-        fi
-        ;;
-    esac
+          ;;
+      esac
+    fi
     if [ -n "$DIRCOLORS_CONF" -a -f "$DIRCOLORS_CONF" ]; then
       eval `"$_dircolors_" "$DIRCOLORS_CONF"`
     else

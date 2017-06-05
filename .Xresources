@@ -4,6 +4,7 @@
 
 !*Font:                  -*-lucidatypewriter-medium-r-normal-*-10-*
 
+XTerm*TermName:         xterm-256color
 XTerm*Font:             -*-lucidatypewriter-medium-r-normal-*-10-*
 XTerm*Font1:            -*-lucidatypewriter-medium-r-normal-*-10-*
 XTerm*Font2:            -*-lucidatypewriter-medium-r-normal-*-12-*
@@ -35,6 +36,7 @@ XTerm*VT100.translations: #override \n\
     Shift<Key>Prior:  scroll-back(1,page) \n\
     Shift<Key>Next:   scroll-forw(1,page) \n
 
+UXTerm*TermName:        xterm-256color
 !UXTerm*Font:             -*-lucidatypewriter-medium-r-normal-*-10-*
 !UXTerm*Font1:            -*-lucidatypewriter-medium-r-normal-*-10-*
 !UXTerm*Font2:            -*-lucidatypewriter-medium-r-normal-*-12-*
