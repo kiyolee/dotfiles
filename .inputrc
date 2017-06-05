@@ -1,6 +1,9 @@
 $if term=xterm
     $include ~/.inputrc.d/inputrc.xterm
 $endif
+$if term=xterm-256color
+    $include ~/.inputrc.d/inputrc.xterm-256color
+$endif
 $if term=cons25
     $include ~/.inputrc.d/inputrc.cons25
 $endif
@@ -12,6 +15,9 @@ $if term=screen
 $endif
 $if term=screen.xterm
     $include ~/.inputrc.d/inputrc.screen.xterm
+$endif
+$if term=screen.xterm-256color
+    $include ~/.inputrc.d/inputrc.screen.xterm-256color
 $endif
 $if term=linux
     $include ~/.inputrc.d/inputrc.linux
