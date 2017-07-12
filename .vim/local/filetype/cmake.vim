@@ -1,6 +1,6 @@
 set softtabstop=2
 set shiftwidth=2
-set noexpandtab
+set tabstop=8
+set expandtab
 set number
-set wrap
-set noautoindent
+set nowrap

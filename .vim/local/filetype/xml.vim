@@ -4,5 +4,3 @@ set noexpandtab
 set number
 set wrap
 set noautoindent
-
-set syntax=xml

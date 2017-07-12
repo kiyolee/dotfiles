@@ -5,5 +5,3 @@ set number
 set nowrap
 set noautoindent
 set ignorecase
-
-set syntax=no

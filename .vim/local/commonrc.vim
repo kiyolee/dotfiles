@@ -1,5 +1,5 @@
 "
-" .vim/commonrc.vim
+" .vim/local/commonrc.vim
 "
 
 set nocompatible
@@ -114,6 +114,7 @@ if has("fname_case")
   au BufNewFile,BufRead *.xsl,*.XSL           exec "so " . My_local_filetype_vim("xml.vim")
   au BufNewFile,BufRead *.xslt,*.XSLT         exec "so " . My_local_filetype_vim("xml.vim")
   au BufNewFile,BufRead Makefile*,makefile*,MAKEFILE* exec "so " . My_local_filetype_vim("make.vim")
+  au BufNewFile,BufRead CMakeLists.txt,cmakelists.txt,CMAKELISTS.TXT exec "so " . My_local_filetype_vim("cmake.vim")
   au BufNewFile,BufRead MEGE_MSG,merge_msg    set nobackup
   au BufNewFile,BufRead svn-*.tmp,svn-*.Tmp,svn-*.TMP set nobackup
 else
@@ -148,6 +149,7 @@ else
   au BufNewFile,BufRead *.xsl                 exec "so " . My_local_filetype_vim("xml.vim")
   au BufNewFile,BufRead *.xslt                exec "so " . My_local_filetype_vim("xml.vim")
   au BufNewFile,BufRead Makefile*             exec "so " . My_local_filetype_vim("make.vim")
+  au BufNewFile,BufRead CMakeLists.txt        exec "so " . My_local_filetype_vim("cmake.vim")
   au BufNewFile,BufRead MERGE_MSG             set nobackup
   au BufNewFile,BufRead svn-*.tmp             set nobackup
 endif
