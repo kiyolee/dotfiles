@@ -8,6 +8,7 @@ find . ! -type d \
     -a ! -name `basename "$0"` \
     -a ! -name dotfiles.tbz \
     -a ! -name '*~' \
+    -a ! -name '*.pyc' \
     -a ! -name .svn \
     -a ! -regex '.*\/\.svn\/.*' \
     -a ! -name .git \
