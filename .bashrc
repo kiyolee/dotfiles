@@ -47,8 +47,12 @@ else
   _pathappend /usr/local/sbin /usr/sbin /sbin
 fi
 
+case "$MSYSTEM" in
+  MINGW32|MINGW64) _pathprepend "$MSYSTEM_PREFIX/bin"
+esac
+
 ### add user path
-_pathmunge "$HOME/bin"
+_pathprepend "$HOME/bin"
 
 ### cygwin specific settings
 if [ -n "$is_cygwin" ]; then

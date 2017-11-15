@@ -240,10 +240,15 @@ if [ -n "$PS1" ]; then
     PC_XTERM_ID=
   fi
   if [ `uname -o` = 'Msys' ]; then
-    if [ `uname -m` == 'x86_64' ]; then
-      PLAT_ID='[msys64]'
+    if [ -n "$MSYSTEM" ]; then
+      PLAT_ID_MSYS="-$MSYSTEM"
     else
-      PLAT_ID='[msys]'
+      PLAT_ID_MSYS=""
+    fi
+    if [ `uname -m` == 'x86_64' ]; then
+      PLAT_ID='[msys64$PLAT_ID_MSYS]'
+    else
+      PLAT_ID='[msys$PLAT_ID_MSYS]'
     fi
   else
     PLAT_ID=''
@@ -260,6 +265,7 @@ if [ -n "$PS1" ]; then
   esac
   unset PC_XTERM_ID
   unset PLAT_ID
+  unset PLAT_ID_MSYS
 
   if [ -f ~/.inputrc ]; then
     bind -f ~/.inputrc
