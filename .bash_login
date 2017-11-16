@@ -246,9 +246,9 @@ if [ -n "$PS1" ]; then
       PLAT_ID_MSYS=""
     fi
     if [ `uname -m` == 'x86_64' ]; then
-      PLAT_ID='[msys64$PLAT_ID_MSYS]'
+      PLAT_ID="[msys64$PLAT_ID_MSYS]"
     else
-      PLAT_ID='[msys$PLAT_ID_MSYS]'
+      PLAT_ID="[msys$PLAT_ID_MSYS]"
     fi
   else
     PLAT_ID=''
