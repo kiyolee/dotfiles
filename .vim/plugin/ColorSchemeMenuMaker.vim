@@ -342,6 +342,8 @@ function! <SID>FindRgbTxt() "{{{
             let rgbtxt = "/usr/X11R6/lib/X11/rgb.txt"
         elseif filereadable("/usr/share/X11/rgb.txt")
             let rgbtxt = "/usr/share/X11/rgb.txt"
+        elseif filereadable("/usr/local/lib/X11/rgb.txt")
+            let rgbtxt = "/usr/local/lib/X11/rgb.txt"
         endif
     endif
     return rgbtxt
