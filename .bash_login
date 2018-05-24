@@ -80,11 +80,7 @@ if [ -n "$PS1" ]; then
   unset VIM
 
   export PAGER="`$_which_ less 2>/dev/null`"
-  if [ -z "$is_sunos" ]; then
-    export LESS='-i -X -d --shift=10'
-  else
-    export LESS='-i -X -d'
-  fi
+  export LESS='-i -X -d --shift=10 -M'
 
   if [ "$_which_" != "echo" ]; then
     alias Which=\""$_which_"\"
