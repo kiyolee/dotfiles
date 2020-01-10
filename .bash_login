@@ -236,15 +236,24 @@ if [ -n "$PS1" ]; then
     PC_XTERM_ID=
   fi
   if [ `uname -o` = 'Msys' ]; then
-    if [ -n "$MSYSTEM" ]; then
-      PLAT_ID_MSYS="-$MSYSTEM"
+    if [ -n "$MSYSTEM" -a "$MSYSTEM" != "MSYS" ]; then
+      PLAT_ID_MSYS="-${MSYSTEM,,}"
     else
       PLAT_ID_MSYS=""
     fi
-    if [ `uname -m` == 'x86_64' ]; then
-      PLAT_ID="[msys64$PLAT_ID_MSYS]"
+    if [ -x /mingw32/bin/git -o -x /mingw64/bin/git ]; then
+      # git bash
+      if [ `uname -m` == 'x86_64' ]; then
+        PLAT_ID="[git$PLAT_ID_MSYS]"
+      else
+        PLAT_ID="[git32$PLAT_ID_MSYS]"
+      fi
     else
-      PLAT_ID="[msys$PLAT_ID_MSYS]"
+      if [ `uname -m` == 'x86_64' ]; then
+        PLAT_ID="[msys$PLAT_ID_MSYS]"
+      else
+        PLAT_ID="[msys32$PLAT_ID_MSYS]"
+      fi
     fi
   else
     PLAT_ID=''
