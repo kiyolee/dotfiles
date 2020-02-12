@@ -10,9 +10,6 @@
 ### save current path
 PATH_ORG=$PATH
 
-### set 'lcase'
-_lcase_='tr "[:upper:]" "[:lower:]"'
-
 ### check system type
 unset is_cygwin
 unset is_mingw
@@ -306,13 +303,13 @@ fi
 ### cygwin host information
 if [ -n "$is_cygwin" ]; then
   if [ -n "$HOST" ]; then
-      HOST="`echo $HOST | $_lcase_`"
+      HOST="${HOST,,}"
   fi
   if [ -n "$USER" ]; then
-      USER="`echo $USER | $_lcase_`"
+      USER="${USER,,}"
   fi
   if [ -n "$USERNAME" ]; then
-      USERNAME="`echo $USERNAME | $_lcase_`"
+      USERNAME="${USERNAME,,}"
   fi
 fi
 
@@ -342,7 +339,6 @@ unset _fortune_
 
 ### clean up
 unset _which_
-unset _lcase_
 unset is_cygwin
 unset is_mingw
 unset is_linux
