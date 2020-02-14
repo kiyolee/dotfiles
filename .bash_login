@@ -303,13 +303,13 @@ fi
 ### cygwin host information
 if [ -n "$is_cygwin" ]; then
   if [ -n "$HOST" ]; then
-      HOST="${HOST,,}"
+    HOST="${HOST,,}"
   fi
   if [ -n "$USER" ]; then
-      USER="${USER,,}"
+    USER="${USER,,}"
   fi
   if [ -n "$USERNAME" ]; then
-      USERNAME="${USERNAME,,}"
+    USERNAME="${USERNAME,,}"
   fi
 fi
 
