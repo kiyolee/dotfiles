@@ -14,6 +14,9 @@ if !has("dos16")
 
   let &g:runtimepath=$VIMRUNTIME . "," . g:my_vim
 
+  function My_vim(fn)
+    return g:my_vim . a:fn
+  endfunction
   function My_local_vim(fn)
     return g:my_vim . "/local/" . a:fn
   endfunction
@@ -55,6 +58,17 @@ else
     set columns=100
     set lines=50
 
+  elseif has("gui_macvim")
+    "
+    " mac
+    "
+    source $VIMRUNTIME/mswin.vim
+    behave xterm
+
+    set gfn=lucida_console:h8
+    set columns=200
+    set lines=66
+
   elseif has("x11")
     "
     " x11
@@ -76,6 +90,8 @@ else
   endif
 
 endif
+
+set encoding=utf-8
 
 endif " version >= 602
 

@@ -232,7 +232,7 @@ if [ -n "$PS1" ]; then
   else
     PC_XTERM_ID=
   fi
-  if [ `uname -o` = 'Msys' ]; then
+  if [ -n "$is_mingw" -o "`uname -o 2>/dev/null`" = 'Msys' ]; then
     if [ -n "$MSYSTEM" -a "$MSYSTEM" != "MSYS" ]; then
       PLAT_ID_MSYS="-${MSYSTEM,,}"
     else
@@ -320,7 +320,12 @@ fi
 
 export RSYNC_RSH='ssh -x'
 
-export _GREP_OPTS="--exclude-from=$HOME/.grep_exclude --color=auto --devices=skip --directories=recurse"
+grep --version | grep -q GNU -
+if [ $? -eq 0 ]; then
+  export _GREP_OPTS="--exclude-from=$HOME/.grep_exclude --color=auto --devices=skip --directories=recurse"
+else
+  export _GREP_OPTS="`sed -e 's/^\(.*\)$/--exclude=\\\\\\'\''\1\\\\\\'\'' /g' $HOME/.grep_exclude | xargs echo` --color=auto --devices=skip --directories=recurse"
+fi
 alias grep="grep $_GREP_OPTS"
 alias Grep=`which grep`
 
