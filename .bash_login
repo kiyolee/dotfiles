@@ -169,7 +169,12 @@ if [ -n "$PS1" ]; then
     #PS1='\w:\! \$ '
     # mono highlight prompt
     PS1='\u@\h:\w:\! \$ '
-    case "$TERM" in
+    if [ "$TERM_PROGRAM" == 'vscode' ]; then
+      _MyTerm=vscode
+    else
+      _MyTerm="$TERM"
+    fi
+    case "$_MyTerm" in
     xterm*|rxvt|screen*)
       # colored prompt for xterm
       PScolor=106
@@ -181,7 +186,7 @@ if [ -n "$PS1" ]; then
       unset PScolor
       unset Pathcolor
       ;;
-    cons25|cygwin|linux|vt220)
+    cons25|cygwin|linux|vt220|vscode)
       PScolor=36
       [ -n "$is_root" ] && PScolor=32
       PS1='\[\e[01;'$PScolor'm\]\u@\h\[\e[0m\]:\[\e[01;33m\]\w\[\e[0m\]:\[\e[01;41m\]\!\[\e[0m\] \$ '
