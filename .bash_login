@@ -288,7 +288,7 @@ if [ -n "$PS1" ]; then
   #$_which_ openbox-2 >&/dev/null && export desktop=openbox-2
 
   alias xclockx=\""`$_which_ xclock 2>/dev/null`"\"" -geometry 100x100-0+0 &"
-  alias dclock=\""`$_which_ xclock 2>/dev/null`"\"" -geometry +0-0 -digital -update 1 -strftime '["`hostname`"] %Y-%m-%d %H:%M:%S' &"
+  alias dclock=\""`$_which_ xclock 2>/dev/null`"\"" -geometry +0-0 -digital -update 1 -strftime '["$HOSTNAME"] %Y-%m-%d %H:%M:%S' &"
 
   if [ -n "$is_cygwin" ]; then
     alias xmanx=\""`$_which_ xman 2>/dev/null`"\"" -geometry -110+0 &"
