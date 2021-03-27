@@ -310,7 +310,7 @@ function! <SID>IsMagenta(r, g, b, h, s, v) "{{{
     else 
         return 0
     endif
-endfunction }}}
+endfunction "}}}
 
 function! <SID>IsOrange(r, g, b, h, s, v) "{{{
     "a magic number found through trial and error
