@@ -171,6 +171,8 @@ if [ -n "$PS1" ]; then
     PS1='\u@\h:\w:\! \$ '
     if [ "$TERM_PROGRAM" == 'vscode' ]; then
       _MyTerm=vscode
+    elif [ -n "$WSL_DISTRO_NAME" ]; then
+      _MyTerm=wsl
     else
       _MyTerm="$TERM"
     fi
@@ -186,7 +188,7 @@ if [ -n "$PS1" ]; then
       unset PScolor
       unset Pathcolor
       ;;
-    cons25|cygwin|linux|vt220|vscode)
+    cons25|cygwin|linux|vt220|vscode|wsl)
       PScolor=36
       [ -n "$is_root" ] && PScolor=32
       PS1='\[\e[01;'$PScolor'm\]\u@\h\[\e[0m\]:\[\e[01;33m\]\w\[\e[0m\]:\[\e[01;41m\]\!\[\e[0m\] \$ '
