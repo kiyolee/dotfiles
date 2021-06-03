@@ -2,21 +2,19 @@
 # .bash_login.pathhelp
 #
 
-#for _egrep in /usr/local/bin/gegrep /usr/bin/gegrep /bin/gegrep /usr/local/bin/egrep /usr/bin/egrep /bin/egrep; do
-#  [ -x $_egrep ] && _egrep_for_pathhelp=$_egrep && break
-#done
-#unset _egrep
-
 _pathmunge () {
-  if ! echo "$PATH" | egrep -q "(^|:)$1($|:)" ; then
-    if [ "$PATH" = "" ]; then
-      PATH="$1"
-    elif [ "$2" = "after" ] ; then
-      PATH="$PATH:$1"
-    else
-      PATH="$1:$PATH"
-    fi
-  fi
+  case ":${PATH}:" in
+    *:"$1":*)
+      ;;
+    *)
+      if [ "${PATH}" = "" ]; then
+        PATH="$1"
+      elif [ "$2" = "after" ] ; then
+        PATH="${PATH}:$1"
+      else
+        PATH="$1:${PATH}"
+      fi
+  esac
 }
 
 _pathappend() {
@@ -40,15 +38,18 @@ _pathprepend() {
 }
 
 _ldpathmunge () {
-  if ! echo "$LD_LIBRARY_PATH" | egrep -q "(^|:)$1($|:)" ; then
-    if [ "$LD_LIBRARY_PATH" = "" ]; then
-      export LD_LIBRARY_PATH="$1"
-    elif [ "$2" = "after" ] ; then
-      export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$1"
-    else
-      export LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH"
-    fi
-  fi
+  case ":${LD_LIBRARY_PATH}:" in
+    *:"$1":*)
+      ;;
+    *)
+      if [ "${LD_LIBRARY_PATH}" = "" ]; then
+        export LD_LIBRARY_PATH="$1"
+      elif [ "$2" = "after" ] ; then
+        export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$1"
+      else
+        export LD_LIBRARY_PATH="$1:${LD_LIBRARY_PATH}"
+      fi
+  esac
 }
 
 _ldpathappend() {
@@ -69,6 +70,16 @@ _ldpathprepend() {
     fi
   done
   unset _p
+}
+
+path() {
+  echo "PATH:-"
+  echo "${PATH}" | tr ':' '\n' | sed -e 's/^/\t/'
+}
+
+ldpath() {
+  echo "LD_LIBRARY_PATH:-"
+  echo "${LD_LIBRARY_PATH}" | tr ':' '\n' | sed -e 's/^/\t/'
 }
 
 # vim:sts=2:sw=2:ts=8:et:syntax=sh

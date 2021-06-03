@@ -14,12 +14,14 @@ PATH_ORG=$PATH
 unset is_cygwin
 unset is_mingw
 unset is_linux
+unset is_macos
 unset is_sunos
 unset is_openbsd
 case `uname -s` in
   [Cc][Yy][Gg][Ww][Ii][Nn]*) is_cygwin=1 ;;
   [Mm][Ii][Nn][Gg][Ww]*|[Mm][Ss][Yy][Ss]*) is_mingw=1 ;;
   [Ll][Ii][Nn][Uu][Xx]*) is_linux=1 ;;
+  [Dd][Aa][Rr][Ww][Ii][Nn]*) is_macos=1 ;;
   [Ss][Uu][Nn][Oo][Ss]*) is_sunos=1 ;;
   [Oo][Pp][Ee][Nn][Bb][Ss][Dd]*) is_openbsd=1 ;;
 esac
@@ -113,9 +115,6 @@ if [ -n "$PS1" ]; then
 
   alias lf='ls -FC'
   alias l='ls -l'
-
-  alias ldpath='( echo "LD_LIBRARY_PATH:-" && ( echo "$LD_LIBRARY_PATH" | tr '\'':'\'' '\''\n'\'' | sed -e '\''s/^/  /'\'' ) )'
-  alias path='( echo "PATH:-" && ( echo "$PATH" | tr '\'':'\'' '\''\n'\'' | sed -e '\''s/^/  /'\'' ) )'
 
   alias cp='cp -ip'
   alias mv='mv -i'
@@ -327,14 +326,27 @@ fi
 
 export RSYNC_RSH='ssh -x'
 
-grep --version | grep -q GNU -
-if [ $? -eq 0 ]; then
+_GREP=grep
+unset is_grep_gnu
+if [ -n "$is_macos" ]; then
+  if /usr/bin/which -s ggrep; then
+    _GREP=ggrep
+    is_grep_gnu=1
+  fi
+else
+  if grep --version | grep -q GNU -; then
+    is_grep_gnu=1
+  fi
+fi
+if [ -n "$is_grep_gnu" ]; then
   export _GREP_OPTS="--exclude-from=$HOME/.grep_exclude --color=auto --devices=skip --directories=recurse"
 else
   export _GREP_OPTS="`sed -e 's/^\(.*\)$/--exclude=\\\\\\'\''\1\\\\\\'\'' /g' $HOME/.grep_exclude | xargs echo` --color=auto --devices=skip --directories=recurse"
 fi
-alias grep="grep $_GREP_OPTS"
-alias Grep=`which grep`
+alias grep="$_GREP $_GREP_OPTS"
+alias Grep=`which $_GREP`
+unset is_grep_gnu
+unset _GREP
 
 export _DIFF_OPTS="--exclude-from=$HOME/.grep_exclude --exclude=.bz2 --exclude=.git --exclude=.hg --exclude=.svn"
 alias diff="diff $_DIFF_OPTS"
@@ -354,6 +366,7 @@ unset _which_
 unset is_cygwin
 unset is_mingw
 unset is_linux
+unset is_macos
 unset is_sunos
 unset is_openbsd
 unset is_root

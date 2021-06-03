@@ -52,7 +52,7 @@ case "$MSYSTEM" in
 esac
 
 ### add user path
-_pathprepend "$HOME/bin"
+_pathprepend ~/bin
 
 ### cygwin specific settings
 if [ -n "$is_cygwin" ]; then
@@ -73,8 +73,8 @@ if [ -n "$is_cygwin" ]; then
 fi
 
 ### further local customisation
-if [ -f "$HOME/.bashrc.local" ]; then
-  source "$HOME/.bashrc.local"
+if [ -f ~/.bashrc.local ]; then
+  source ~/.bashrc.local
 fi
 
 ### clean up
@@ -83,8 +83,8 @@ unset is_linux
 unset is_freebsd
 
 ### load .login for interactive but non-login shell
-if [ -n "$PS1" -a -f "$HOME/.bash_login" ]; then
-  tty -s && source "$HOME/.bash_login"
+if [ -n "$PS1" -a -f ~/.bash_login ]; then
+  tty -s && source ~/.bash_login
 fi
 
 # vim:sts=2:sw=2:ts=8:et:syntax=sh

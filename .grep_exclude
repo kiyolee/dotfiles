@@ -16,6 +16,7 @@
 *.iobj
 *.ipch
 *.ipdb
+*.lastbuildstate
 *.la
 *.lib
 *.lnk
