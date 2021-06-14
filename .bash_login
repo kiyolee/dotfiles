@@ -348,7 +348,7 @@ alias Grep=`which $_GREP`
 unset is_grep_gnu
 unset _GREP
 
-export _DIFF_OPTS="--exclude-from=$HOME/.grep_exclude --exclude=.bz2 --exclude=.git --exclude=.hg --exclude=.svn"
+export _DIFF_OPTS="--exclude-from=$HOME/.diff_exclude --exclude=.bz2 --exclude=.git --exclude=.hg --exclude=.svn"
 alias diff="diff $_DIFF_OPTS"
 alias Diff=`which diff`
 

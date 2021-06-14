@@ -52,7 +52,7 @@ case "$MSYSTEM" in
 esac
 
 ### add user path
-_pathprepend ~/bin
+_pathprepend ~/.local/bin ~/bin
 
 ### cygwin specific settings
 if [ -n "$is_cygwin" ]; then
