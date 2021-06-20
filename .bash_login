@@ -143,14 +143,8 @@ if [ -n "$PS1" ]; then
 
   export HISTSIZE=5000
   export HISTFILE=~/.bash_history
-  export HISTCONTROL=ignoredups
-
-  if [ "${BASH_VERSINFO[0]}" -ge 3 ]; then
-    export HISTCONTROL="${HISTCONTROL}:erasedups"
-    export HISTTIMEFORMAT='[%H:%M:%S] '
-  else
-    export HISTFILE=~/.bash2_history
-  fi
+  export HISTCONTROL=ignorespace:ignoredups:erasedups
+  export HISTTIMEFORMAT='[%H:%M:%S] '
 
   if [ "`basename $SHELL`" != bash ]; then
     alias bash="$SHELL"
