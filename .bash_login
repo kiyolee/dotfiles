@@ -15,53 +15,23 @@ unset is_cygwin
 unset is_mingw
 unset is_linux
 unset is_macos
-unset is_sunos
 unset is_openbsd
 case `uname -s` in
   [Cc][Yy][Gg][Ww][Ii][Nn]*) is_cygwin=1 ;;
   [Mm][Ii][Nn][Gg][Ww]*|[Mm][Ss][Yy][Ss]*) is_mingw=1 ;;
   [Ll][Ii][Nn][Uu][Xx]*) is_linux=1 ;;
   [Dd][Aa][Rr][Ww][Ii][Nn]*) is_macos=1 ;;
-  [Ss][Uu][Nn][Oo][Ss]*) is_sunos=1 ;;
   [Oo][Pp][Ee][Nn][Bb][Ss][Dd]*) is_openbsd=1 ;;
 esac
 
 ### check root user
 unset is_root
-if [ -z "$is_sunos" ]; then
-  [ `id -u` -eq 0 ] && is_root=1
-else
-  [ -x /usr/local/bin/id ] && [ `/usr/local/bin/id -u` -eq 0 ] && is_root=1
-fi
+[ `id -u` -eq 0 ] && is_root=1
 
-### locate 'which'
-unalias which >/dev/null 2>&1
-unset _which_
-for _w in ~/bin /usr/gnu/bin /usr/local/bin /usr/bin /bin; do
-  if [ -x "$_w/which" ]; then
-    _which_="$_w/which"
-    break
-  fi
-done
-unset _w
-if [ -n "$is_sunos" -o -z "$_which_" \
-      -o `dd if="$_which_" bs=1 count=2 2>/dev/null` = '#!' ]; then
-  _which_='echo'
-fi
-
-### set shell
-shell_basename=`echo $0 | sed -e 's/^[ 	]*-*//'`
-shell_basename=`basename "$shell_basename"`
-case $shell_basename in
-bash*)
-  # as 'which' itself may be a shell script on some systems,
-  # so DO NOT call 'which' for interactive shell
-  if [ \( -n "$PS1" -a "$_which_" != "echo" \) -o -n "$is_cygwin" ]; then
-    export SHELL="`$_which_ $shell_basename 2>/dev/null`"
-  fi
-  ;;
-esac
-unset shell_basename
+_my_which() {
+  cmd=`command -v "$1" 2>/dev/null`
+  [ -x "$cmd" ] && echo "$cmd" || ( echo "$1" && return 1 )
+}
 
 ### settings for interactive shell
 if [ -n "$PS1" ]; then
@@ -73,41 +43,36 @@ if [ -n "$PS1" ]; then
   export BLOCKSIZE=K
 
   export EXINIT='set showmode'
-  export EDITOR="`$_which_ vim 2>/dev/null`"
+  export EDITOR="`_my_which vim`"
   export VISUAL="$EDITOR"
-  #export VIM='/usr/share/vim'
-  unset VIM
-
-  export PAGER="`$_which_ less 2>/dev/null`"
-  export LESS='-i -X -d --shift=10 -M'
-
-  if [ "$_which_" != "echo" ]; then
-    alias Which=\""$_which_"\"
-    #alias which_=\""$_which_"\"
-    alias whichx=\""$_which_"\"" -a"
+  if [ -n "$is_cygwin" ]; then
+    unset VIM
   fi
 
-  alias Ls=\""`$_which_ ls 2>/dev/null`"\"" -a"
+  export PAGER="`_my_which less`"
+  export LESS='-i -X -d --shift=10 -M'
+
+  alias Ls=\""`_my_which ls`"\"" -a"
   alias Lf='Ls -FC'
   alias L='Ls -l'
 
   if [ -n "$is_cygwin" -o -n "$is_linux" -o -n "$is_mingw" ]; then
-    alias ls=\""`$_which_ ls 2>/dev/null`"\"" --color=auto -a"
+    alias ls=\""`_my_which ls`"\"" --color=auto -a"
   else
-    if [ -x "`$_which_ gnuls 2>/dev/null`" ]; then
-      alias ls=\""`$_which_ gnuls 2>/dev/null`"\"" --color=auto -a"
-    elif [ -x "`$_which_ gls 2>/dev/null`" ]; then
-      alias ls=\""`$_which_ gls 2>/dev/null`"\"" --color=auto -a"
+    if [ -x "`_my_which gnuls`" ]; then
+      alias ls=\""`_my_which gnuls`"\"" --color=auto -a"
+    elif [ -x "`_my_which gls`" ]; then
+      alias ls=\""`_my_which gls`"\"" --color=auto -a"
     elif [ -x "/usr/local/bin/gls" ]; then
       alias ls=\""/usr/local/bin/gls"\"" --color=auto -a"
     elif [ -x "/usr/gnu/bin/gls" ]; then
       alias ls=\""/usr/gnu/bin/gls"\"" --color=auto -a"
     elif [ -x "/usr/gnu/bin/ls" ]; then
       alias ls=\""/usr/gnu/bin/ls"\"" --color=auto -a"
-    elif [ -x "`$_which_ colorls 2>/dev/null`" ]; then
-      alias ls=\""`$_which_ colorls 2>/dev/null`"\"" -G -a"
-    elif [ -x "`$_which_ ls 2>/dev/null`" ]; then
-      alias ls=\""`$_which_ ls 2>/dev/null`"\"" -a"
+    elif [ -x "`_my_which colorls`" ]; then
+      alias ls=\""`_my_which colorls`"\"" -G -a"
+    elif [ -x "`_my_which ls`" ]; then
+      alias ls=\""`_my_which ls`"\"" -a"
     else
       alias ls="ls -a"
     fi
@@ -119,7 +84,7 @@ if [ -n "$PS1" ]; then
   alias cp='cp -ip'
   alias mv='mv -i'
 
-  if [ -z "$is_sunos" -a -z "$is_openbsd" ]; then
+  if [ -z "$is_openbsd" ]; then
     alias ln='ln -i'
   fi
 
@@ -133,9 +98,9 @@ if [ -n "$PS1" ]; then
   alias vi='vim -X'
   alias vi0='vi -c "normal '\''0"'
 
-  if [ -n "$is_cygwin" -a -x "`$_which_ procps 2>/dev/null`" ]; then
-    alias Ps=\""`$_which_ ps 2>/dev/null`"\"
-    #alias ps_=\""`$_which_ ps 2>/dev/null`"\"
+  if [ -n "$is_cygwin" -a -x "`_my_which procps`" ]; then
+    alias Ps=\""`_my_which ps`"\"
+    #alias ps_=\""`_my_which ps`"\"
     alias ps='procps'
   fi
 
@@ -145,10 +110,6 @@ if [ -n "$PS1" ]; then
   export HISTFILE=~/.bash_history
   export HISTCONTROL=ignorespace:ignoredups:erasedups
   export HISTTIMEFORMAT='[%H:%M:%S] '
-
-  if [ "`basename $SHELL`" != bash ]; then
-    alias bash="$SHELL"
-  fi
 
   IGNOREEOF=
   FIGNORE='~:.swp'
@@ -166,6 +127,8 @@ if [ -n "$PS1" ]; then
       _MyTerm=vscode
     elif [ -n "$WSL_DISTRO_NAME" ]; then
       _MyTerm=wsl
+    elif [ -n "$WT_SESSION" ]; then
+      _MyTerm=wt
     else
       _MyTerm="$TERM"
     fi
@@ -181,7 +144,7 @@ if [ -n "$PS1" ]; then
       unset PScolor
       unset Pathcolor
       ;;
-    cons25|cygwin|linux|vt220|vscode|wsl)
+    cons25|cygwin|linux|vt220|vscode|wsl|wt)
       PScolor=36
       [ -n "$is_root" ] && PScolor=32
       PS1='\[\e[01;'$PScolor'm\]\u@\h\[\e[0m\]:\[\e[01;33m\]\w\[\e[0m\]:\[\e[01;41m\]\!\[\e[0m\] \$ '
@@ -280,16 +243,16 @@ if [ -n "$PS1" ]; then
   ### setup XFree86
 
   #export desktop=openbox
-  #$_which_ openbox-2 >&/dev/null && export desktop=openbox-2
+  #_my_which openbox-2 >&/dev/null && export desktop=openbox-2
 
-  alias xclockx=\""`$_which_ xclock 2>/dev/null`"\"" -geometry 100x100-0+0 &"
-  alias dclock=\""`$_which_ xclock 2>/dev/null`"\"" -geometry +0-0 -digital -update 1 -strftime '["$HOSTNAME"] %Y-%m-%d %H:%M:%S' &"
+  alias xclockx=\""`_my_which xclock`"\"" -geometry 100x100-0+0 &"
+  alias dclock=\""`_my_which xclock`"\"" -geometry +0-0 -digital -update 1 -strftime '["$HOSTNAME"] %Y-%m-%d %H:%M:%S' &"
 
   if [ -n "$is_cygwin" ]; then
-    alias xmanx=\""`$_which_ xman 2>/dev/null`"\"" -geometry -110+0 &"
+    alias xmanx=\""`_my_which xman`"\"" -geometry -110+0 &"
   else
-    if [ -n "`$_which_ xman 2>/dev/null`" ]; then
-      alias xmanx="env MANPATH="\"'`manpath`'\"" "\""`$_which_ xman 2>/dev/null`"\"" -geometry -110+0 &"
+    if [ -n "`_my_which xman`" ]; then
+      alias xmanx="env MANPATH="\"'`manpath`'\"" "\""`_my_which xman`"\"" -geometry -110+0 &"
     fi
   fi
 
@@ -323,7 +286,7 @@ export RSYNC_RSH='ssh -x'
 _GREP=grep
 unset is_grep_gnu
 if [ -n "$is_macos" ]; then
-  if /usr/bin/which -s ggrep; then
+  if command -v ggrep &>/dev/null; then
     _GREP=ggrep
     is_grep_gnu=1
   fi
@@ -337,14 +300,14 @@ if [ -n "$is_grep_gnu" ]; then
 else
   export _GREP_OPTS="`sed -e 's/^\(.*\)$/--exclude=\\\\\\'\''\1\\\\\\'\'' /g' $HOME/.grep_exclude | xargs echo` --color=auto --devices=skip --directories=recurse"
 fi
+alias Grep=`_my_which $_GREP`
 alias grep="$_GREP $_GREP_OPTS"
-alias Grep=`which $_GREP`
 unset is_grep_gnu
 unset _GREP
 
 export _DIFF_OPTS="--exclude-from=$HOME/.diff_exclude --exclude=.bz2 --exclude=.git --exclude=.hg --exclude=.svn"
+alias Diff=`_my_which diff`
 alias diff="diff $_DIFF_OPTS"
-alias Diff=`which diff`
 
 ### tell your fortune
 if [ -n "$is_cygwin" ]; then
@@ -356,12 +319,10 @@ fi
 unset _fortune_
 
 ### clean up
-unset _which_
 unset is_cygwin
 unset is_mingw
 unset is_linux
 unset is_macos
-unset is_sunos
 unset is_openbsd
 unset is_root
 
