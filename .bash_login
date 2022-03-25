@@ -29,6 +29,7 @@ unset is_root
 [ `id -u` -eq 0 ] && is_root=1
 
 _my_which() {
+  local cmd
   cmd=`command -v "$1" 2>/dev/null`
   [ -x "$cmd" ] && echo "$cmd" || ( echo "$1" && return 1 )
 }
