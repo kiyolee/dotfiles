@@ -297,17 +297,22 @@ else
   fi
 fi
 if [ -n "$is_grep_gnu" ]; then
-  export _GREP_OPTS="--exclude-from=$HOME/.grep_exclude --color=auto --devices=skip --directories=recurse"
+  export _GREP_OPTS="--color=auto --exclude-from=$HOME/.grep_exclude --devices=skip --directories=recurse"
 else
-  export _GREP_OPTS="`sed -e 's/^\(.*\)$/--exclude=\\\\\\'\''\1\\\\\\'\'' /g' $HOME/.grep_exclude | xargs echo` --color=auto --devices=skip --directories=recurse"
+  export _GREP_OPTS="--color=auto `sed -e 's/^\(.*\)$/--exclude=\\\\\\'\''\1\\\\\\'\'' /g' $HOME/.grep_exclude | xargs echo` --devices=skip --directories=recurse"
 fi
-alias Grep=`_my_which $_GREP`
+alias Grep="`_my_which $_GREP` --color=auto"
 alias grep="$_GREP $_GREP_OPTS"
 unset is_grep_gnu
 unset _GREP
 
-export _DIFF_OPTS="--exclude-from=$HOME/.diff_exclude --exclude=.bz2 --exclude=.git --exclude=.hg --exclude=.svn"
-alias Diff=`_my_which diff`
+if [ -n "$is_macos" ] || diff --version | grep -q GNU -; then
+  export _DIFF_OPTS="--color=auto --exclude-from=$HOME/.diff_exclude --exclude=.bz2 --exclude=.git --exclude=.hg --exclude=.svn"
+  alias Diff="`_my_which diff` --color=auto"
+else
+  export _DIFF_OPTS="--exclude-from=$HOME/.diff_exclude --exclude=.bz2 --exclude=.git --exclude=.hg --exclude=.svn"
+  alias Diff=`_my_which diff`
+fi
 alias diff="diff $_DIFF_OPTS"
 
 ### tell your fortune
