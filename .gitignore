@@ -66,6 +66,7 @@
 .swp
 .viminfo
 .vs
+.vscode
 __pycache__
 __tags_*
 _sgbak

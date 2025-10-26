@@ -107,7 +107,8 @@ if [ -n "$PS1" ]; then
 
   alias psl='ps auxww | sort -n +1 | less -SF'
 
-  export HISTSIZE=5000
+  export HISTSIZE=50000
+  export HISTFILESIZE=20000
   export HISTFILE=~/.bash_history
   export HISTCONTROL=ignorespace:ignoredups:erasedups
   export HISTTIMEFORMAT='[%H:%M:%S] '
